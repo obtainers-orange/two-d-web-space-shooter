@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git init:*)",
+      "Bash(git config:*)",
+      "Bash(git remote add:*)",
+      "Bash(git add:*)",
+      "Bash(GIT_AUTHOR_DATE=\"2023-11-17 10:00:00\" GIT_COMMITTER_DATE=\"2023-11-17 10:00:00\" git commit -m \"Initial project setup\")"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
