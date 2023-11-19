@@ -5,9 +5,12 @@
       "Bash(git config:*)",
       "Bash(git remote add:*)",
       "Bash(git add:*)",
-      "Bash(GIT_AUTHOR_DATE=\"2023-11-17 10:00:00\" GIT_COMMITTER_DATE=\"2023-11-17 10:00:00\" git commit -m \"Initial project setup\")"
+      "Bash(GIT_AUTHOR_DATE=\"2023-11-17 10:00:00\" GIT_COMMITTER_DATE=\"2023-11-17 10:00:00\" git commit -m \"Initial project setup\")",
+      "Bash(git checkout:*)",
+      "Bash(GIT_AUTHOR_DATE=\"2023-11-19 14:30:00\" GIT_COMMITTER_DATE=\"2023-11-19 14:30:00\" git commit -m \"Add Flask server foundation and HTML structure\")"
     ],
     "deny": [],
-    "ask": []
+    "ask": [],
+    "includeCoAuthoredBy": false
   }
 }

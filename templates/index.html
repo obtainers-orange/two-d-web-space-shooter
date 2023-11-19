@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Space Shooter 2D</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="game-container">
+        <div id="start-screen" class="screen active">
+            <h1 class="game-title">SPACE SHOOTER</h1>
+            <div class="menu-buttons">
+                <button class="btn btn-primary" onclick="startGame()">START GAME</button>
+                <button class="btn btn-secondary" onclick="showHighScores()">HIGH SCORES</button>
+                <button class="btn btn-secondary" onclick="showControls()">CONTROLS</button>
+            </div>
+            <div class="difficulty-selector">
+                <label>Difficulty:</label>
+                <select id="difficulty">
+                    <option value="easy">Easy</option>
+                    <option value="normal" selected>Normal</option>
+                    <option value="hard">Hard</option>
+                    <option value="insane">Insane</option>
+                </select>
+            </div>
+        </div>
+
+        <div id="game-screen" class="screen">
+            <div id="game-ui">
+                <div class="score-board">
+                    <div class="score">Score: <span id="score">0</span></div>
+                    <div class="lives">Lives: <span id="lives">3</span></div>
+                    <div class="level">Level: <span id="level">1</span></div>
+                </div>
+                <div class="power-bar">
+                    <div class="power-fill" id="power-fill"></div>
+                </div>
+            </div>
+            <canvas id="gameCanvas"></canvas>
+        </div>
+
+        <div id="pause-screen" class="screen overlay">
+            <div class="pause-content">
+                <h2>PAUSED</h2>
+                <button class="btn btn-primary" onclick="resumeGame()">RESUME</button>
+                <button class="btn btn-secondary" onclick="restartGame()">RESTART</button>
+                <button class="btn btn-secondary" onclick="quitGame()">QUIT</button>
+            </div>
+        </div>
+
+        <div id="gameover-screen" class="screen overlay">
+            <div class="gameover-content">
+                <h2>GAME OVER</h2>
+                <div class="final-score">Final Score: <span id="final-score">0</span></div>
+                <input type="text" id="player-name" placeholder="Enter your name" maxlength="3">
+                <button class="btn btn-primary" onclick="submitScore()">SUBMIT SCORE</button>
+                <button class="btn btn-secondary" onclick="restartGame()">PLAY AGAIN</button>
+                <button class="btn btn-secondary" onclick="quitGame()">MAIN MENU</button>
+            </div>
+        </div>
+
+        <div id="highscores-screen" class="screen overlay">
+            <div class="highscores-content">
+                <h2>HIGH SCORES</h2>
+                <div id="highscores-list"></div>
+                <button class="btn btn-primary" onclick="closeHighScores()">BACK</button>
+            </div>
+        </div>
+
+        <div id="controls-screen" class="screen overlay">
+            <div class="controls-content">
+                <h2>CONTROLS</h2>
+                <div class="control-list">
+                    <div class="control-item">
+                        <span class="key">↑↓←→ / WASD</span>
+                        <span class="action">Move Ship</span>
+                    </div>
+                    <div class="control-item">
+                        <span class="key">SPACE</span>
+                        <span class="action">Fire Weapon</span>
+                    </div>
+                    <div class="control-item">
+                        <span class="key">SHIFT</span>
+                        <span class="action">Special Attack</span>
+                    </div>
+                    <div class="control-item">
+                        <span class="key">P / ESC</span>
+                        <span class="action">Pause Game</span>
+                    </div>
+                </div>
+                <button class="btn btn-primary" onclick="closeControls()">BACK</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/game.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/player.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/enemies.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/particles.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/powerups.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/ui.js') }}"></script>
+</body>
+</html>
