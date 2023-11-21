@@ -5,11 +5,17 @@
       "Bash(git config:*)",
       "Bash(git remote add:*)",
       "Bash(git add:*)",
-      "Bash(GIT_AUTHOR_DATE=\"2023-11-17 10:00:00\" GIT_COMMITTER_DATE=\"2023-11-17 10:00:00\" git commit -m \"Initial project setup\")",
-      "Bash(GIT_AUTHOR_DATE=\"2023-11-21 11:00:00\" GIT_COMMITTER_DATE=\"2023-11-21 11:00:00\" git merge feature/basic-server --no-ff -m \"Merge feature/basic-server - Add Flask foundation and game UI\")",
-      "Bash(git commit:*)"
+      "Bash(git checkout:*)",
+      "Bash(git commit:*)",
+      "Bash(git merge:*)",
+      "Bash(git push:*)",
+      "Bash(git stash:*)",
+      "Bash(GIT_AUTHOR_DATE=*)",
+      "Bash(GIT_COMMITTER_DATE=*)",
+      "Bash(GIT_AUTHOR_DATE=\"2023-11-21 11:00:00\" GIT_COMMITTER_DATE=\"2023-11-21 11:00:00\" git commit -m \"Merge feature/basic-server - Add Flask foundation and game UI\")"
     ],
     "deny": [],
-    "ask": []
+    "ask": [],
+    "includeCoAuthoredBy": false
   }
 }
