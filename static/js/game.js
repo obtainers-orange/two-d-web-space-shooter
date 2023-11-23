@@ -5,6 +5,9 @@ let lives = 3;
 let level = 1;
 let difficulty = 'normal';
 let animationId;
+let player;
+let stars = [];
+let lastTime = 0;
 
 const GAME_WIDTH = 800;
 const GAME_HEIGHT = 600;
@@ -15,6 +18,9 @@ function init() {
     
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
+    
+    // Initialize stars
+    initStars();
 }
 
 function resizeCanvas() {
@@ -29,19 +35,32 @@ function startGame() {
     lives = 3;
     level = 1;
     
+    // Initialize player
+    player = new Player(canvas);
+    
     document.getElementById('start-screen').classList.remove('active');
     document.getElementById('game-screen').classList.add('active');
     
     updateUI();
+    lastTime = performance.now();
     gameLoop();
 }
 
-function gameLoop() {
+function gameLoop(currentTime) {
     if (gameState !== 'playing') return;
+    
+    const deltaTime = currentTime - lastTime;
+    lastTime = currentTime;
     
     clearCanvas();
     
-    // Game logic will be implemented in subsequent features
+    // Update game objects
+    updateStars(deltaTime);
+    player.update(deltaTime);
+    
+    // Draw everything
+    drawStars();
+    player.draw(ctx);
     
     animationId = requestAnimationFrame(gameLoop);
 }
@@ -49,19 +68,36 @@ function gameLoop() {
 function clearCanvas() {
     ctx.fillStyle = '#000';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-    
-    // Draw stars background
-    drawStars();
+}
+
+function initStars() {
+    stars = [];
+    for (let i = 0; i < 150; i++) {
+        stars.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            size: Math.random() * 2 + 0.5,
+            speed: Math.random() * 2 + 0.5,
+            opacity: Math.random() * 0.8 + 0.2
+        });
+    }
+}
+
+function updateStars(deltaTime) {
+    stars.forEach(star => {
+        star.y += star.speed;
+        if (star.y > canvas.height) {
+            star.y = -10;
+            star.x = Math.random() * canvas.width;
+        }
+    });
 }
 
 function drawStars() {
-    ctx.fillStyle = '#fff';
-    for (let i = 0; i < 100; i++) {
-        const x = Math.random() * canvas.width;
-        const y = Math.random() * canvas.height;
-        const size = Math.random() * 2;
-        ctx.fillRect(x, y, size, size);
-    }
+    stars.forEach(star => {
+        ctx.fillStyle = `rgba(255, 255, 255, ${star.opacity})`;
+        ctx.fillRect(star.x, star.y, star.size, star.size);
+    });
 }
 
 function updateUI() {
