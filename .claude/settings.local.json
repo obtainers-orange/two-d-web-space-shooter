@@ -13,7 +13,8 @@
       "Bash(GIT_AUTHOR_DATE=*)",
       "Bash(GIT_COMMITTER_DATE=*)",
       "Bash(GIT_AUTHOR_DATE=\"2023-11-21 11:00:00\" GIT_COMMITTER_DATE=\"2023-11-21 11:00:00\" git commit -m \"Merge feature/basic-server - Add Flask foundation and game UI\")",
-      "Bash(GIT_AUTHOR_DATE=\"2023-11-23 10:00:00\" GIT_COMMITTER_DATE=\"2023-11-23 10:00:00\" git commit -m \"Add player spaceship class with movement controls\")"
+      "Bash(GIT_AUTHOR_DATE=\"2023-11-23 10:00:00\" GIT_COMMITTER_DATE=\"2023-11-23 10:00:00\" git commit -m \"Add player spaceship class with movement controls\")",
+      "Bash(GIT_AUTHOR_DATE=\"2023-11-25 15:20:00\" GIT_COMMITTER_DATE=\"2023-11-25 15:20:00\" git commit -m \"Add shooting mechanics and special abilities\")"
     ],
     "deny": [],
     "ask": [],
