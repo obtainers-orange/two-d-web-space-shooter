@@ -16,7 +16,8 @@
       "Bash(GIT_AUTHOR_DATE=\"2023-11-23 10:00:00\" GIT_COMMITTER_DATE=\"2023-11-23 10:00:00\" git commit -m \"Add player spaceship class with movement controls\")",
       "Bash(GIT_AUTHOR_DATE=\"2023-11-25 15:20:00\" GIT_COMMITTER_DATE=\"2023-11-25 15:20:00\" git commit -m \"Add shooting mechanics and special abilities\")",
       "Bash(GIT_AUTHOR_DATE=\"2023-11-27 09:00:00\" GIT_COMMITTER_DATE=\"2023-11-27 09:00:00\" git merge feature/player-spaceship --no-ff -m \"Merge feature/player-spaceship - Add player controls and shooting\")",
-      "Bash(GIT_AUTHOR_DATE=\"2023-11-29 11:30:00\" GIT_COMMITTER_DATE=\"2023-11-29 11:30:00\" git commit -m \"Add enemy spawning system with multiple enemy types\")"
+      "Bash(GIT_AUTHOR_DATE=\"2023-11-29 11:30:00\" GIT_COMMITTER_DATE=\"2023-11-29 11:30:00\" git commit -m \"Add enemy spawning system with multiple enemy types\")",
+      "Bash(GIT_AUTHOR_DATE=\"2023-12-01 14:20:00\" GIT_COMMITTER_DATE=\"2023-12-01 14:20:00\" git commit -m \"Implement wave system and boss enemies\")"
     ],
     "deny": [],
     "ask": [],
