@@ -6,6 +6,7 @@ let level = 1;
 let difficulty = 'normal';
 let animationId;
 let player;
+let enemyManager;
 let stars = [];
 let lastTime = 0;
 
@@ -35,8 +36,9 @@ function startGame() {
     lives = 3;
     level = 1;
     
-    // Initialize player
+    // Initialize player and enemy manager
     player = new Player(canvas);
+    enemyManager = new EnemyManager(canvas);
     
     document.getElementById('start-screen').classList.remove('active');
     document.getElementById('game-screen').classList.add('active');
@@ -57,9 +59,14 @@ function gameLoop(currentTime) {
     // Update game objects
     updateStars(deltaTime);
     player.update(deltaTime);
+    enemyManager.update(player, difficulty, level);
+    
+    // Check collisions
+    checkCollisions();
     
     // Draw everything
     drawStars();
+    enemyManager.draw(ctx);
     player.draw(ctx);
     
     animationId = requestAnimationFrame(gameLoop);
@@ -100,6 +107,69 @@ function drawStars() {
     });
 }
 
+function checkCollisions() {
+    // Player bullets vs enemies
+    player.bullets.forEach((bullet, bulletIndex) => {
+        enemyManager.enemies.forEach((enemy, enemyIndex) => {
+            if (collision(bullet, enemy)) {
+                if (enemy.takeDamage(bullet.damage)) {
+                    score += enemy.points;
+                    updateUI();
+                    
+                    // Level up check
+                    if (score >= level * 1000) {
+                        level++;
+                        updateUI();
+                    }
+                }
+                player.bullets.splice(bulletIndex, 1);
+            }
+        });
+    });
+    
+    // Enemy bullets vs player
+    enemyManager.enemies.forEach(enemy => {
+        enemy.bullets.forEach((bullet, bulletIndex) => {
+            if (collision(bullet, player)) {
+                if (player.takeDamage()) {
+                    lives--;
+                    updateUI();
+                    if (lives <= 0) {
+                        gameOver();
+                    }
+                }
+                enemy.bullets.splice(bulletIndex, 1);
+            }
+        });
+        
+        // Enemy collision with player
+        if (collision(enemy, player)) {
+            if (player.takeDamage()) {
+                lives--;
+                enemy.takeDamage(enemy.maxHealth);
+                updateUI();
+                if (lives <= 0) {
+                    gameOver();
+                }
+            }
+        }
+    });
+}
+
+function collision(obj1, obj2) {
+    return obj1.x < obj2.x + obj2.width &&
+           obj1.x + obj1.width > obj2.x &&
+           obj1.y < obj2.y + obj2.height &&
+           obj1.y + obj1.height > obj2.y;
+}
+
+function gameOver() {
+    gameState = 'gameover';
+    cancelAnimationFrame(animationId);
+    document.getElementById('final-score').textContent = score;
+    document.getElementById('gameover-screen').classList.add('active');
+}
+
 function updateUI() {
     document.getElementById('score').textContent = score;
     document.getElementById('lives').textContent = lives;
@@ -126,6 +196,8 @@ function restartGame() {
     document.querySelectorAll('.screen.overlay').forEach(screen => {
         screen.classList.remove('active');
     });
+    if (player) player.reset();
+    if (enemyManager) enemyManager.reset();
     startGame();
 }
 
