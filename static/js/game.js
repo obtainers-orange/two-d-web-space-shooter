@@ -7,6 +7,7 @@ let difficulty = 'normal';
 let animationId;
 let player;
 let enemyManager;
+let powerUpManager;
 let stars = [];
 let lastTime = 0;
 
@@ -36,9 +37,10 @@ function startGame() {
     lives = 3;
     level = 1;
     
-    // Initialize player and enemy manager
+    // Initialize game managers
     player = new Player(canvas);
     enemyManager = new EnemyManager(canvas);
+    powerUpManager = new PowerUpManager(canvas);
     
     document.getElementById('start-screen').classList.remove('active');
     document.getElementById('game-screen').classList.add('active');
@@ -60,12 +62,14 @@ function gameLoop(currentTime) {
     updateStars(deltaTime);
     player.update(deltaTime);
     enemyManager.update(player, difficulty, level);
+    powerUpManager.update(player, enemyManager);
     
     // Check collisions
     checkCollisions();
     
     // Draw everything
     drawStars();
+    powerUpManager.draw(ctx);
     enemyManager.draw(ctx);
     player.draw(ctx);
     
