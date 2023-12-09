@@ -63,12 +63,14 @@ function gameLoop(currentTime) {
     player.update(deltaTime);
     enemyManager.update(player, difficulty, level);
     powerUpManager.update(player, enemyManager);
+    particleManager.update();
     
     // Check collisions
     checkCollisions();
     
     // Draw everything
     drawStars();
+    particleManager.draw(ctx);
     powerUpManager.draw(ctx);
     enemyManager.draw(ctx);
     player.draw(ctx);
@@ -118,6 +120,7 @@ function checkCollisions() {
             if (collision(bullet, enemy)) {
                 if (enemy.takeDamage(bullet.damage)) {
                     score += enemy.points;
+                    particleManager.createExplosion(enemy.x + enemy.width / 2, enemy.y + enemy.height / 2);
                     updateUI();
                     
                     // Level up check
@@ -125,6 +128,8 @@ function checkCollisions() {
                         level++;
                         updateUI();
                     }
+                } else {
+                    particleManager.createHit(enemy.x + enemy.width / 2, enemy.y + enemy.height / 2);
                 }
                 player.bullets.splice(bulletIndex, 1);
             }
