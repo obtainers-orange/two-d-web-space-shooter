@@ -7,6 +7,7 @@ let difficulty = 'normal';
 let animationId;
 let player;
 let enemyManager;
+let powerUpManager;
 let stars = [];
 let lastTime = 0;
 
@@ -36,9 +37,10 @@ function startGame() {
     lives = 3;
     level = 1;
     
-    // Initialize player and enemy manager
+    // Initialize game managers
     player = new Player(canvas);
     enemyManager = new EnemyManager(canvas);
+    powerUpManager = new PowerUpManager(canvas);
     
     document.getElementById('start-screen').classList.remove('active');
     document.getElementById('game-screen').classList.add('active');
@@ -60,12 +62,16 @@ function gameLoop(currentTime) {
     updateStars(deltaTime);
     player.update(deltaTime);
     enemyManager.update(player, difficulty, level);
+    powerUpManager.update(player, enemyManager);
+    particleManager.update();
     
     // Check collisions
     checkCollisions();
     
     // Draw everything
     drawStars();
+    particleManager.draw(ctx);
+    powerUpManager.draw(ctx);
     enemyManager.draw(ctx);
     player.draw(ctx);
     
@@ -114,6 +120,7 @@ function checkCollisions() {
             if (collision(bullet, enemy)) {
                 if (enemy.takeDamage(bullet.damage)) {
                     score += enemy.points;
+                    particleManager.createExplosion(enemy.x + enemy.width / 2, enemy.y + enemy.height / 2);
                     updateUI();
                     
                     // Level up check
@@ -121,6 +128,8 @@ function checkCollisions() {
                         level++;
                         updateUI();
                     }
+                } else {
+                    particleManager.createHit(enemy.x + enemy.width / 2, enemy.y + enemy.height / 2);
                 }
                 player.bullets.splice(bulletIndex, 1);
             }
