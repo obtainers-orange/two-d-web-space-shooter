@@ -138,6 +138,8 @@ class Player {
     }
     
     shoot() {
+        audioManager.play('shoot');
+        
         this.bullets.push({
             x: this.x + this.width / 2 - 2,
             y: this.y,
