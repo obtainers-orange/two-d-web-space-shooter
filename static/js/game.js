@@ -31,6 +31,9 @@ function resizeCanvas() {
 }
 
 function startGame() {
+    // Resume audio context on user interaction
+    audioManager.resume();
+    
     difficulty = document.getElementById('difficulty').value;
     gameState = 'playing';
     score = 0;
@@ -121,6 +124,7 @@ function checkCollisions() {
                 if (enemy.takeDamage(bullet.damage)) {
                     score += enemy.points;
                     particleManager.createExplosion(enemy.x + enemy.width / 2, enemy.y + enemy.height / 2);
+                    audioManager.play('explosion');
                     updateUI();
                     
                     // Level up check
@@ -130,6 +134,7 @@ function checkCollisions() {
                     }
                 } else {
                     particleManager.createHit(enemy.x + enemy.width / 2, enemy.y + enemy.height / 2);
+                    audioManager.play('enemyHit');
                 }
                 player.bullets.splice(bulletIndex, 1);
             }
@@ -142,6 +147,7 @@ function checkCollisions() {
             if (collision(bullet, player)) {
                 if (player.takeDamage()) {
                     lives--;
+                    audioManager.play('playerHit');
                     updateUI();
                     if (lives <= 0) {
                         gameOver();
@@ -247,7 +253,10 @@ function loadHighScores() {
                 entry.className = 'highscore-entry';
                 entry.innerHTML = `
                     <span>${index + 1}. ${score.name}</span>
-                    <span>${score.score.toLocaleString()}</span>
+                    <span class="score-details">
+                        ${score.score.toLocaleString()} 
+                        <small>(Lv.${score.level || 1} ${score.difficulty || 'normal'})</small>
+                    </span>
                 `;
                 listEl.appendChild(entry);
             });
@@ -256,8 +265,29 @@ function loadHighScores() {
 
 function submitScore() {
     const name = document.getElementById('player-name').value.toUpperCase() || 'AAA';
-    // TODO: Submit score to backend
-    console.log('Submitting score:', name, score);
+    
+    fetch('/api/highscores', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            name: name,
+            score: score,
+            level: level,
+            difficulty: difficulty
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            console.log(`Score submitted! Rank: ${data.rank}`);
+        }
+    })
+    .catch(error => {
+        console.error('Error submitting score:', error);
+    });
+    
     quitGame();
 }
 
@@ -270,6 +300,19 @@ document.addEventListener('keydown', (e) => {
             resumeGame();
         }
     }
+});
+
+// Event listeners for powerups
+window.addEventListener('healthRestore', (e) => {
+    lives = Math.min(lives + e.detail, 5);
+    audioManager.play('powerup');
+    updateUI();
+});
+
+window.addEventListener('bombUsed', (e) => {
+    score += e.detail * 50;
+    audioManager.play('explosion');
+    updateUI();
 });
 
 // Initialize on load
