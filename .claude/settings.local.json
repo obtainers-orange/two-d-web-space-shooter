@@ -20,7 +20,8 @@
       "Bash(GIT_AUTHOR_DATE=\"2023-12-01 14:20:00\" GIT_COMMITTER_DATE=\"2023-12-01 14:20:00\" git commit -m \"Implement wave system and boss enemies\")",
       "Bash(GIT_AUTHOR_DATE=\"2023-12-03 09:45:00\" GIT_COMMITTER_DATE=\"2023-12-03 09:45:00\" git commit -m \"Add collision detection between players and enemies\")",
       "Bash(GIT_AUTHOR_DATE=\"2023-12-07 13:00:00\" GIT_COMMITTER_DATE=\"2023-12-07 13:00:00\" git commit -m \"Add power-up system with various effects\")",
-      "Bash(GIT_AUTHOR_DATE=\"2023-12-09 16:30:00\" GIT_COMMITTER_DATE=\"2023-12-09 16:30:00\" git commit -m \"Add particle effects for explosions and hits\")"
+      "Bash(GIT_AUTHOR_DATE=\"2023-12-09 16:30:00\" GIT_COMMITTER_DATE=\"2023-12-09 16:30:00\" git commit -m \"Add particle effects for explosions and hits\")",
+      "Bash(GIT_AUTHOR_DATE=\"2023-12-17 10:00:00\" GIT_COMMITTER_DATE=\"2023-12-17 10:00:00\" git merge feature/sound-and-polish --no-ff -m \"Merge feature/sound-and-polish - Complete game with sound and high scores\")"
     ],
     "deny": [],
     "ask": [],
